@@ -1,0 +1,15 @@
+
+canvas {
+	background: linear-gradient(240deg, rgba(150, 50, 50, 0.3), rgba(0, 0, 200, 0));
+}
+
+#instructions {
+	position: absolute;
+	color: #fff;
+	bottom: 0;
+	padding-bottom: 6px;
+	font-family: sans-serif;
+	width: 100%;
+	text-align: center;
+	pointer-events: none;
+}
