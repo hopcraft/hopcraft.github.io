@@ -1,34 +1,112 @@
 html {
+  width: 100%;
   height: 100%;
 }
 
 body {
+  font-size: 14px;
+  font-family: -apple-system,Helvetica,sans-serif; 
+  text-align: center;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #3e1e82;
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  text-size-adjust: none;
   height: 100%;
-  overflow-x: hidden;
-  transition: background-color 5s ease-in-out;
-}
-
-body.shining {
-  background-color: #0ccdde;
 }
 
 .container {
-  height: 0;
-  background:
-    linear-gradient(240deg, rgba(150, 50, 50, 0.3), rgba(0, 0, 200, 0));
-  transition:
-    background-color 5s ease-in-out,
-    height 5s ease-in-out,
-    transform 3s cubic-bezier(.17, .86, .73, .14);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  color: #fff;
+  width: 100%;
+  height: 100%;
 }
 
-.container.styled {
-  background-color: #0ccdde;
-  height: 50%;
-  transform: rotate3d(1, 2, 1, 45deg);
+.main {
+  box-sizing: border-box;
+  display: inline-block;
+  background-image: url(../assets/images/background.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  min-height: 100%;
+  padding-bottom: 50px;
+}
+
+.meteors {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  user-drag: none;
+  overflow: hidden;
+}
+
+.meteors .meteor {
+  position: fixed;
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transform-origin: 18px 180px;
+  -moz-transform-origin: 18px 180px;
+  transform-origin: 18px 180px;
+  backface-visibility: hidden;
+  user-select: none;
+  user-drag: none;
+  background-image: url(../assets/images/meteor.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 36px;
+  height: 198px;
+}
+
+.brand {
+  font-size: 40px;
+  margin-top: 100px;
+  letter-spacing: 2px;
+  color: rgb(255, 255, 255);
+  text-shadow: 
+    rgb(255, 255, 255) 0px 0px 10px, 
+    rgb(255, 255, 255) 0px 0px 20px, 
+    rgb(255, 0, 222) 0px 0px 30px, 
+    rgb(255, 0, 222) 0px 0px 40px, 
+    rgb(255, 0, 222) 0px 0px 10px, 
+    rgb(255, 0, 222) 0px 0px 10px, 
+    rgb(255, 0, 222) 0px 0px 100px;
+}
+
+footer {
+  display: flex;
+  height: 50px;
+  margin-top: -50px;
+  align-items: center;
+}
+
+footer p {
+  flex: 1;
+  text-align: center;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+  .meteor {
+    background-image: url(../assets/images/meteor@2x.png);
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+  .meteor {
+    background-image: url(../assets/images/meteor@3x.png);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
