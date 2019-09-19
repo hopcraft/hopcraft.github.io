@@ -54,7 +54,8 @@ window.requestAnimationFrame = window.requestAnimationFrame
 
     for (var i = total; i--;) { 
       var meteor = new Meteor(); 
-      meteors.push(meteor); container.appendChild(meteor.element); 
+      meteors.push(meteor); 
+      container.appendChild(meteor.element); 
     }
 
     update();
