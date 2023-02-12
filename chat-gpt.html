@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT 演示</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="scrollView" scroll-with-animation scroll-y="true" style="width: 100%;">
+            <div id="okk" class="chat-content" scroll-with-animation>
+                <div v-for="(x,i) in msgList" :key="i">
+                    <div v-if="x.my" class="word-my">
+                        <div class="info">
+                            <div class="info-content">
+                                <text style="word-break: break-all;">{{x.msg}}</text>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="!x.my" class="word">
+                        <div class="info">
+                            <div class="info-content">
+                                <text style="word-break: break-all;">{{x.msg}}</text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height: 130rpx;">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="wrapper">
+                <input id="textInput" class="text-input" 
+                    confirm-type="search" 
+                    placeholder-class="my-neirong-sm" 
+                    placeholder="请输入您的问题" 
+                    :disabled="msgLoad"
+                    v-model="msg" type="text" 
+                    @keyup.enter="sendMsg" 
+                    @confirm="sendMsg" 
+                />
+                <button id="btnSend" class="btn-send" @click="sendMsg" :disabled="msgLoad">{{sentext}}</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+        const { createApp } = Vue
+        createApp({
+            data() {
+                return {
+                    api: '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',
+                    msgLoad: false,
+                    anData: {},
+                    sentext: '发送',
+
+                    animationData: {},
+                    showTow: false,
+                    msgList: [{
+                        my: false,
+                        msg: "您好，我是580快诊 ChatGPT 聊天机器人"
+                    }],
+                    msgContent: "",
+                    msg: ""
+                }
+            },
+            methods: {
+                sendMsg() {
+                    if (this.msg == "") {
+                        return 0;
+                    }
+                    this.sentext = '请求中'
+                    this.msgList.push({
+                        "msg": this.msg,
+                        "my": true
+                    })
+                    
+                    setTimeout(function() {
+                        console.log('开始滚动')
+                        $('#scrolldiv').scrollTop(99999999999999999)
+                        $('#app').scrollTop(99999999999999999)
+                        $('body').scrollTop(99999999999999999)
+                    }, 1000)
+
+                    this.msgContent += (this.msg)
+                    this.msgLoad = true
+                    // 清除消息
+                    this.msg = ""
+                    axios.post('https://api.openai.com/v1/completions', {
+                        prompt: this.msgContent, max_tokens: 1024,
+                        // model: 'davinci:ft-personal-2023-02-12-08-41-48'
+                        model: "text-davinci-003"
+                        // model: "text-davinci-002-render"
+                    }, {
+                        headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + this.api }
+                    }).then(res => {
+                        console.log(res);
+                        let text = res.data.choices[0].text.replace("openai:", "").replace("openai：", "").replace(/^\n|\n$/g, "")
+                        console.log(text);
+                        this.msgList.push({
+                            "msg": text,
+                            "my": false
+                        })
+                        this.msgContent += (text + "\n")
+                        this.msgLoad = false
+                        this.sentext = '发送'
+                    }).catch(err => {
+                        this.msgLoad = false
+                        this.sentext = '发送'
+                    })
+                },
+            }
+        }).mount('#app')
+    </script>
+
+</body>
+
+</html>
